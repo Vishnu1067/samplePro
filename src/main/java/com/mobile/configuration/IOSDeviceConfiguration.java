@@ -8,7 +8,6 @@ import com.mobile.utils.ConfigurationManager;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.InputStreamReader;
-
 import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -62,10 +61,10 @@ public class IOSDeviceConfiguration {
                 return null;
             } else {
                 while (endPos < getIOSDeviceID.length()) {
-                    if (validDeviceIds == null 
-                            || (validDeviceIds != null 
+                    if (validDeviceIds == null
+                            || (validDeviceIds != null
                             && validDeviceIds.contains(
-                                    getIOSDeviceID.substring(startPos, endPos + 1)))) {
+                            getIOSDeviceID.substring(startPos, endPos + 1)))) {
                         if (!deviceUDIDiOS.contains(getIOSDeviceID)) {
                             deviceUDIDiOS.add(getIOSDeviceID.substring(startPos, endPos + 1));
                         }
@@ -92,7 +91,7 @@ public class IOSDeviceConfiguration {
                 String[] lines = getIOSDeviceID.split("\n");
                 for (int i = 0; i < lines.length; i++) {
                     lines[i] = lines[i].replaceAll("\\s+", "");
-                    if (validDeviceIds == null 
+                    if (validDeviceIds == null
                             || (validDeviceIds != null && validDeviceIds.contains(lines[i]))) {
                         devices.put("deviceID" + i, lines[i]);
                     }
@@ -108,7 +107,6 @@ public class IOSDeviceConfiguration {
     /**
      * @param UDID    - Device Serial ID
      * @param appPath - Path of the .ipa file
-     *
      */
     public void installApp(String UDID, String appPath) {
         System.out.println("Installing App on device********" + UDID);
@@ -118,7 +116,6 @@ public class IOSDeviceConfiguration {
     /**
      * @param UDID     - Device Serial ID
      * @param bundleID - Bundle ID of the .ipa file
-     *
      */
     public void unInstallApp(String UDID, String bundleID) {
         System.out.println("Uninstalling App on device*******" + UDID);
@@ -129,7 +126,6 @@ public class IOSDeviceConfiguration {
     /**
      * @param bundleID
      * @return
-     *
      */
     public boolean checkIfAppIsInstalled(String bundleID) {
         boolean appAlreadyExists =
@@ -138,8 +134,8 @@ public class IOSDeviceConfiguration {
     }
 
     /**
-     *  Need to fix bug not fetching the version and product type for
-     *                              report category
+     * Need to fix bug not fetching the version and product type for
+     * report category
      */
 
     public String getIOSDeviceProductTypeAndVersion(String udid) {
@@ -159,7 +155,7 @@ public class IOSDeviceConfiguration {
                         + " | grep ProductVersion");
     }
 
-    public boolean checkiOSDevice(String UDID) throws Exception {
+    public boolean checkiOSDevice(String UDID) {
         String getIOSDeviceID = commandPrompt.runCommand("idevice_id --list");
         return getIOSDeviceID.contains(UDID);
     }

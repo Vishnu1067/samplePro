@@ -8,12 +8,18 @@ public class AvailablePorts {
      * Generates Random ports
      * Used during starting appium server
      */
-    public int getPort() throws Exception {
+    public int getPort() {
 
-        ServerSocket socket = new ServerSocket(0);
-        socket.setReuseAddress(true);
-        int port = socket.getLocalPort();
-        socket.close();
-        return port;
+        try {
+
+            ServerSocket socket = new ServerSocket(0);
+            socket.setReuseAddress(true);
+            int port = socket.getLocalPort();
+            socket.close();
+            return port;
+
+        } catch (Exception e) {
+            return 0;
+        }
     }
 }
