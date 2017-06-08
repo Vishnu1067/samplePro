@@ -36,6 +36,11 @@
 
     <dependencies>
         <dependency>
+            <groupId>log4j</groupId>
+            <artifactId>log4j</artifactId>
+            <version>LATEST</version>
+        </dependency>
+        <dependency>
             <groupId>io.appium</groupId>
             <artifactId>java-client</artifactId>
             <version>5.0.0-BETA8</version>
@@ -44,11 +49,6 @@
             <groupId>com.google.guava</groupId>
             <artifactId>guava</artifactId>
             <version>21.0</version>
-        </dependency>
-        <dependency>
-            <groupId>com.github.saikrishna321</groupId>
-            <artifactId>cucumber-jvm-parallel-plugin</artifactId>
-            <version>2.0.9</version>
         </dependency>
         <dependency>
             <groupId>junit</groupId>
@@ -130,11 +130,6 @@
             <artifactId>jfiglet</artifactId>
             <version>0.0.7</version>
         </dependency>
-        <dependency>
-            <groupId>com.github.saikrishna321</groupId>
-            <artifactId>cucumber-jvm-parallel-plugin</artifactId>
-            <version>2.0.9</version>
-        </dependency>
 
     </dependencies>
 
@@ -143,9 +138,18 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.6.1</version>
                 <configuration>
                     <source>1.8</source>
                     <target>1.8</target>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-resources-plugin</artifactId>
+                <version>3.0.2</version>
+                <configuration>
+                    <encoding>UTF-8</encoding>
                 </configuration>
             </plugin>
             <plugin>
@@ -171,7 +175,7 @@
                             <glue>com.implementation</glue>
                             <featuresDirectory>src/test/resources/features/</featuresDirectory>
                             <cucumberOutputDir>target</cucumberOutputDir>
-                            <tags>@smoke===</tags>
+                            <tags>"@smoke"</tags>
                             <useTestNG>true</useTestNG>
                         </configuration>
                     </execution>
