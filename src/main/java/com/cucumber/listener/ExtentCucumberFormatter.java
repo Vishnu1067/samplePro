@@ -1,4 +1,4 @@
-package com.mobile.core;
+package com.cucumber.listener;
 
 import com.mobile.configuration.AndroidDeviceConfiguration;
 import com.mobile.configuration.IOSDeviceConfiguration;

@@ -21,8 +21,8 @@ public class XpathXML {
 
     public String parseXML(int threadNumber) {
         try {
-            File inputFile = new File(
-                    System.getProperty("user.dir") + "/target/parallelCucumber.xml");
+            File inputFile = new File(System.getProperty("user.dir") + "/target/parallel.xml");
+
             if (inputFile.exists()) {
                 DocumentBuilderFactory dbFactory
                         = DocumentBuilderFactory.newInstance();
