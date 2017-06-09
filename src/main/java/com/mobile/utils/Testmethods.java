@@ -1,12 +1,10 @@
 package com.mobile.utils;
 
-import java.util.List;
-
 public class Testmethods {
 
     private String methodName;
     private String gifPath;
-    private List<String> screenShots;
+    private String screenShots;
 
     public String getGifPath() {
         return gifPath;
@@ -24,14 +22,12 @@ public class Testmethods {
         this.methodName = methodName;
     }
 
-    public List<String> getScreenShots() {
+    public String getScreenShots() {
         return screenShots;
     }
 
-    public void setScreenShots(List<String> screenShots) {
+    public void setScreenShots(String screenShots) {
         this.screenShots = screenShots;
     }
-
-
 
 }

@@ -1,20 +1,25 @@
 package com.implementation;
 
 
-import com.cucumber.listener.ExtentCucumberFormatter;
+import com.pageobjects.Login;
+import cucumber.api.java.en.And;
 import cucumber.api.java.en.Given;
-import cucumber.api.java.en.When;
 
 
-public class StepDefs extends ExtentCucumberFormatter {
+public class StepDefs {
 
-    @Given("^I am on Testing$")
+
+    Login login = new Login(DriverManager.getDriver());
+
+    @Given("^I enter email and password$")
     public void i_am_on_Testing() {
-        System.out.println("I am Testing");
+        login.typeUserName("testing@test");
+        login.typePassword("test");
+
     }
 
-    @When("^I am still testing$")
-    public void i_am_still_testing() {
+    @And("^I should see error message as \"(.*)\"$")
+    public void i_am_still_testing(String errorMessage) {
         System.out.println("I am still testing");
     }
 }

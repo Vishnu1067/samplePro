@@ -38,7 +38,7 @@
         <dependency>
             <groupId>log4j</groupId>
             <artifactId>log4j</artifactId>
-            <version>LATEST</version>
+            <version>1.2.17</version>
         </dependency>
         <dependency>
             <groupId>io.appium</groupId>
@@ -181,6 +181,46 @@
                     </execution>
                 </executions>
             </plugin>
+            <!--<plugin>-->
+            <!--<groupId>com.github.temyers</groupId>-->
+            <!--<artifactId>cucumber-jvm-parallel-plugin</artifactId>-->
+            <!--<version>4.1.0</version>-->
+            <!--<executions>-->
+            <!--<execution>-->
+            <!--<id>generateRunners</id>-->
+            <!--<phase>validate</phase>-->
+            <!--<goals>-->
+            <!--<goal>generateRunners</goal>-->
+            <!--</goals>-->
+            <!--<configuration>-->
+            <!--&lt;!&ndash; Mandatory &ndash;&gt;-->
+            <!--&lt;!&ndash; comma separated list of package names to scan for glue code &ndash;&gt;-->
+            <!--<glue>foo, bar</glue>-->
+            <!--&lt;!&ndash; These are the default values &ndash;&gt;-->
+            <!--&lt;!&ndash; Where to output the generated tests &ndash;&gt;-->
+            <!--<outputDirectory>${project.build.directory}/generated-test-sources/cucumber-->
+            <!--</outputDirectory>-->
+            <!--&lt;!&ndash; The diectory containing your feature files.  &ndash;&gt;-->
+            <!--<featuresDirectory>src/test/resources/features/</featuresDirectory>-->
+            <!--&lt;!&ndash; Directory where the cucumber report files shall be written  &ndash;&gt;-->
+            <!--<cucumberOutputDir>target/cucumber-parallel</cucumberOutputDir>-->
+            <!--&lt;!&ndash; comma separated list of output formats &ndash;&gt;-->
+            <!--<format>json</format>-->
+            <!--&lt;!&ndash; CucumberOptions.strict property &ndash;&gt;-->
+            <!--<strict>true</strict>-->
+            <!--&lt;!&ndash; CucumberOptions.monochrome property &ndash;&gt;-->
+            <!--<monochrome>true</monochrome>-->
+            <!--&lt;!&ndash; The tags to run, maps to CucumberOptions.tags property &ndash;&gt;-->
+            <!--<tags>"@smoke"</tags>-->
+            <!--&lt;!&ndash; If set to true, only feature files containing the required tags shall be generated. &ndash;&gt;-->
+            <!--&lt;!&ndash; Excluded tags (~@notMe) are ignored. &ndash;&gt;-->
+            <!--<filterFeaturesByTags>false</filterFeaturesByTags>-->
+            <!--&lt;!&ndash; Generate TestNG runners instead of JUnit ones. &ndash;&gt;-->
+            <!--<useTestNG>true</useTestNG>-->
+            <!--</configuration>-->
+            <!--</execution>-->
+            <!--</executions>-->
+            <!--</plugin>-->
         </plugins>
     </build>
 
