@@ -1,25 +1,46 @@
 package com.implementation;
 
 
+import com.cucumber.listener.ExtentCucumberFormatter;
+import com.mobile.appium.manager.AppiumDriverManager;
 import com.pageobjects.Login;
 import cucumber.api.java.en.And;
 import cucumber.api.java.en.Given;
+import cucumber.api.java.en.When;
+import org.junit.Assert;
 
 
-public class StepDefs {
+public class StepDefs extends ExtentCucumberFormatter {
+
+    Login login;
+
+    public StepDefs() {
+        super();
+        login = new Login(AppiumDriverManager.getDriver());
+    }
 
 
-    Login login = new Login(DriverManager.getDriver());
-
-    @Given("^I enter email and password$")
-    public void i_am_on_Testing() {
-        login.typeUserName("testing@test");
-        login.typePassword("test");
+    @Given("^I enter email \"([^\"]*)\" and password \"([^\"]*)\"$")
+    public void enterEmailAndPassword(String userName, String password) {
+        login.typeUserName(userName);
+        login.typePassword(password);
 
     }
 
-    @And("^I should see error message as \"(.*)\"$")
-    public void i_am_still_testing(String errorMessage) {
-        System.out.println("I am still testing");
+    @When("^I click on Signin Button$")
+    public void clickSignInButton() {
+        login.clickSignIn();
+    }
+
+    @And("^I should not see Welcome page with user URL$")
+    public void verifyNotDisplayURL() {
+
+        Assert.assertFalse("Login Message is displayed", login.isDisplayUserURL());
+    }
+
+    @And("^I should see Welcome page with user URL$")
+    public void verifyDisplayURL() {
+
+        Assert.assertTrue("Login Message is not displayed", login.isDisplayUserURL());
     }
 }

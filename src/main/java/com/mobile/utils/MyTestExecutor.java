@@ -341,7 +341,7 @@ public class MyTestExecutor {
         return suite;
     }
 
-    public XmlSuite constructXmlSuiteDistributeCucumber(int deviceCount) {
+    public XmlSuite constructXmlSuiteDistributeCucumber(int deviceCount, ArrayList<String> deviceSerial) {
 
         XmlSuite suite = new XmlSuite();
         suite.setName("TestNG Forum");
