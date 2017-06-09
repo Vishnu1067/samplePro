@@ -1,8 +1,8 @@
 @smoke
 
-Feature: Testing Mobile
+Feature: Word Press Sample App
 
-  Scenario: Just For Testing
+  Scenario: Login Invalid User name and Password
 
-    Given I am on Testing
-    When I am still testing
+    Given I enter email and password
+    And I should see error message as "The username or password you entered in incorrect"

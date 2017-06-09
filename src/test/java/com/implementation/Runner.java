@@ -12,14 +12,15 @@ package com.implementation;
 //}
 
 
-import com.mobile.utils.ParallelThread;
+import com.mobile.appium.manager.ParallelThread;
 import org.junit.Test;
 import org.testng.Assert;
 
 public class Runner {
 
     @Test
-    public void testCukesRunner() throws Exception {
+    public void testCukesRunner() {
+
         ParallelThread cucumberParallelThread = new ParallelThread();
         boolean hasFailures = cucumberParallelThread.runner("output");
         Assert.assertFalse(hasFailures, "Testcases have failed in parallel execution");

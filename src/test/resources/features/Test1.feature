@@ -1,4 +1,4 @@
-@smoke
+//@smoke
 
 Feature: Testing Mobile 1
 

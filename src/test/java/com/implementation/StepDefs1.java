@@ -8,6 +8,10 @@ import cucumber.api.java.en.When;
 
 public class StepDefs1 extends ExtentCucumberFormatter {
 
+    public StepDefs1() {
+        super();
+    }
+
     @Given("^I am on Testing 1$")
     public void i_am_on_Testing() {
         System.out.println("I am Testing");
