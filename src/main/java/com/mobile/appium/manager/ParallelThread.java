@@ -138,7 +138,7 @@ public class ParallelThread {
             //addPluginToCucumberRunner();
 
             if (configurationManager.getProperty("RUNNER").equalsIgnoreCase("distribute")) {
-                myTestExecutor.constructXmlSuiteDistributeCucumber(deviceCount);
+                myTestExecutor.constructXmlSuiteDistributeCucumber(deviceCount, deviceAllocationManager.getDevices());
                 hasFailures = myTestExecutor.runMethodParallel();
                 htmlReporter.generateReports();
 

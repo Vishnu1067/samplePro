@@ -1,8 +1,9 @@
-//@smoke
+@smoke
 
-Feature: Testing Mobile 1
+Feature: Word Press Sample App
 
-  Scenario: Just For Testing 1
+  Scenario: Login valid User name and Password
 
-    Given I am on Testing 1
-    When I am still testing 1
+    Given I enter email "vodqa@gmail.com" and password "Hello12345678"
+    When I click on Signin Button
+    And I should see Welcome page with user URL

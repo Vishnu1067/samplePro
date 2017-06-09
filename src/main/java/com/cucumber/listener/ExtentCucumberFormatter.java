@@ -184,8 +184,8 @@ public class ExtentCucumberFormatter implements Reporter, Formatter {
             try {
                 deviceAllocationManager.allocateDevice("",
                         deviceSingleton.getDeviceUDID());
-//                reportManager.createParentNodeExtent(feature.getName(), "")
-//                        .assignCategory(tags);
+                reportManager.createParentNodeExtent(feature.getName(), "")
+                        .assignCategory(tags);
                 appiumServerManager.startAppiumServer(feature.getName());
             } catch (Exception e) {
                 e.printStackTrace();
