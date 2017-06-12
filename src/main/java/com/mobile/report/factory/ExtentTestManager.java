@@ -5,22 +5,21 @@ import com.aventstack.extentreports.ExtentTest;
 import com.aventstack.extentreports.Status;
 import org.testng.Reporter;
 
-import java.util.Properties;
 
 public class ExtentTestManager {
 
-    public static Properties prop = new Properties();
 
     public static ThreadLocal<ExtentTest> extentTest = new ThreadLocal<>();
     public static ExtentReports extent = ExtentManager.getExtent();
     private static ExtentTest test;
 
     public synchronized static ExtentTest getTest() {
+
         return extentTest.get();
     }
 
-    public synchronized static ExtentTest createTest(String name, String description,
-                                                     String deviceId) {
+    public synchronized static ExtentTest createTest(String name, String description, String deviceId) {
+
         test = extent.createTest(name, description).assignCategory(deviceId);
         extentTest.set(test);
         return getTest();

@@ -16,8 +16,7 @@ import java.util.Optional;
 public class AppiumDriverManager {
 
 
-    private static ThreadLocal<AppiumDriver> appiumDriver
-            = new ThreadLocal<>();
+    private static ThreadLocal<AppiumDriver> appiumDriver = new ThreadLocal<>();
     private IOSDeviceConfiguration iosDeviceConfiguration;
     private AppiumServerManager appiumServerManager;
     private DesiredCapabilityManager desiredCapabilityManager;
@@ -100,7 +99,7 @@ public class AppiumDriverManager {
         System.out.println("Caps generated" + android + iOS);
         startAppiumDriver(Optional.ofNullable(iOS), Optional.ofNullable(android));
         try {
-            Thread.sleep(3000);
+            Thread.sleep(6000);
         } catch (Exception e) {
 
         }
@@ -151,11 +150,6 @@ public class AppiumDriverManager {
             }
         }
         return android;
-    }
-
-    public void stopAppiumDriver() {
-
-        AppiumDriverManager.getDriver().quit();
     }
 
 }

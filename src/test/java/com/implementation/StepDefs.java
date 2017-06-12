@@ -2,22 +2,18 @@ package com.implementation;
 
 
 import com.cucumber.listener.ExtentCucumberFormatter;
-import com.mobile.appium.manager.AppiumDriverManager;
 import com.pageobjects.Login;
 import cucumber.api.java.en.And;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.When;
 import org.junit.Assert;
 
+import static com.mobile.appium.manager.AppiumDriverManager.getDriver;
+
 
 public class StepDefs extends ExtentCucumberFormatter {
 
-    Login login;
-
-    public StepDefs() {
-        super();
-        login = new Login(AppiumDriverManager.getDriver());
-    }
+    Login login = new Login(getDriver());
 
 
     @Given("^I enter email \"([^\"]*)\" and password \"([^\"]*)\"$")

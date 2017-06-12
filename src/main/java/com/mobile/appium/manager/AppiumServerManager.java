@@ -88,9 +88,9 @@ public class AppiumServerManager {
         AppiumServiceBuilder builder =
                 new AppiumServiceBuilder().withAppiumJS(new File(prop.getProperty("APPIUM_JS_PATH")))
                         .withArgument(GeneralServerFlag.LOG_LEVEL, "warn")
-//                        .withLogFile(new File(
-//                                System.getProperty("user.dir") + "/target/appiumlogs/" + DeviceManager.getDeviceUDID()
-//                                        .replaceAll("\\W", "_") + "__" + methodName + ".txt"))
+                        .withLogFile(new File(
+                                System.getProperty("user.dir") + "/target/appiumlogs/" + DeviceManager.getDeviceUDID()
+                                        .replaceAll("\\W", "_") + "__" + methodName + ".txt"))
                         .withArgument(AndroidServerFlag.CHROME_DRIVER_PORT, Integer.toString(chromePort))
                         .withArgument(AndroidServerFlag.BOOTSTRAP_PORT_NUMBER,
                                 Integer.toString(bootstrapPort))
@@ -132,7 +132,7 @@ public class AppiumServerManager {
         AppiumDriverLocalService appiumDriverLocalService;
         AppiumServiceBuilder builder =
                 new AppiumServiceBuilder().withAppiumJS(new File(prop.getProperty("APPIUM_JS_PATH")))
-                        .withArgument(GeneralServerFlag.LOG_LEVEL, "info").withLogFile(new File(
+                        .withArgument(GeneralServerFlag.LOG_LEVEL, "warn").withLogFile(new File(
                         System.getProperty("user.dir") + "/target/appiumlogs/" + DeviceManager.getDeviceUDID()
                                 .replaceAll("\\W", "_") + "__" + methodName + ".txt"))
                         .withArgument(webKitProxy, webKitPort)

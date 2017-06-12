@@ -9,10 +9,7 @@ import com.aventstack.extentreports.reporter.configuration.ChartLocation;
 import com.aventstack.extentreports.reporter.configuration.Theme;
 import com.mobile.utils.CommandPrompt;
 import com.mobile.utils.ConfigurationManager;
-import org.apache.commons.io.FileUtils;
 
-import java.io.File;
-import java.io.IOException;
 import java.net.URL;
 import java.util.Arrays;
 import java.util.List;
@@ -32,10 +29,10 @@ public class ExtentManager {
             extent = new ExtentReports();
             extent.attachReporter(getHtmlReporter());
 
-            if (System.getenv("ExtentX") != null && System.getenv("ExtentX")
-                    .equalsIgnoreCase("true")) {
-                extent.attachReporter(getExtentXReporter());
-            }
+//            if (System.getenv("ExtentX") != null && System.getenv("ExtentX")
+//                    .equalsIgnoreCase("true")) {
+//                extent.attachReporter(getExtentXReporter());
+//            }
 
             extent.setSystemInfo("Selenium Java Version", "3.3.1");
             extent.setSystemInfo("Environment", "Prod");
@@ -69,28 +66,28 @@ public class ExtentManager {
         ExtentHtmlReporter htmlReporter = new ExtentHtmlReporter(filePath);
         URL inputUrl = null;
 
-        try {
-            inputUrl = Thread.currentThread().getContextClassLoader().getResource("extent.xml");
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+//        try {
+//            inputUrl = Thread.currentThread().getContextClassLoader().getResource("extent.xml");
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
+//
+//        File dest = new File(System.getProperty("user.dir") + "/target/extent.xml");
+//
+//        try {
+//            FileUtils.copyURLToFile(inputUrl, dest);
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
 
-        File dest = new File(System.getProperty("user.dir") + "/target/extent.xml");
-
-        try {
-            FileUtils.copyURLToFile(inputUrl, dest);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        htmlReporter.loadXMLConfig(System.getProperty("user.dir") + "/target/extent.xml");
+        htmlReporter.loadXMLConfig(System.getProperty("user.dir") + "/extent.xml");
         // make the charts visible on report open
         htmlReporter.config().setChartVisibilityOnOpen(true);
 
         // report title
         //String documentTitle = prop.getProperty("documentTitle", "aventstack - Extent");
-        htmlReporter.config().setDocumentTitle("AppiumTestDistribution");
-        htmlReporter.config().setReportName("AppiumTestDistribution");
+        htmlReporter.config().setDocumentTitle("Mobile Automation");
+        htmlReporter.config().setReportName("Mobile Testing");
         htmlReporter.config().setTestViewChartLocation(ChartLocation.TOP);
         htmlReporter.config().setTheme(Theme.STANDARD);
         return htmlReporter;
