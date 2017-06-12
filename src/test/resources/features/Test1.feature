@@ -1,6 +1,6 @@
 @smoke
 
-Feature: Word Press Sample App
+Feature: Word Press App Testing
 
   Scenario: Login valid User name and Password
 

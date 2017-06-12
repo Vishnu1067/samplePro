@@ -56,6 +56,7 @@ public class ReportManager {
     }
 
     public void setAuthorName(IInvokedMethod methodName) throws Exception {
+
         String authorName;
         boolean methodNamePresent;
         ArrayList<String> listeners = new ArrayList<>();

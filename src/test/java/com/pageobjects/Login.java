@@ -18,17 +18,16 @@ public class Login {
     }
 
     @AndroidFindBy(id = "org.wordpress.android:id/nux_username")
-    private static WebElement emailTextBox;
-
+    private WebElement emailTextBox;
 
     @AndroidFindBy(id = "org.wordpress.android:id/nux_password")
-    private static WebElement passwordTextBox;
+    private WebElement passwordTextBox;
 
     @AndroidFindBy(id = "org.wordpress.android:id/nux_sign_in_button")
-    private static WebElement signInButton;
+    private WebElement signInButton;
 
     @AndroidFindBy(id = "org.wordpress.android:id/my_site_subtitle_label")
-    private static WebElement userWordPressURL;
+    private WebElement userWordPressURL;
 
 
     public void typeUserName(String userName) {
@@ -42,6 +41,7 @@ public class Login {
     }
 
     public void clickSignIn() {
+
         signInButton.click();
     }
 

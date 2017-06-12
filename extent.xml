@@ -14,10 +14,10 @@
         <protocol>https</protocol>
 
         <!-- title of the document -->
-        <documentTitle>ExtentReports 2.0</documentTitle>
+        <documentTitle>Mobile Automation</documentTitle>
 
         <!-- report name - displayed at top-nav -->
-        <reportName>Appium Test</reportName>
+        <reportName>Mobilr Automation</reportName>
 
         <!-- report headline - displayed at top-nav, after reportHeadline -->
         <reportHeadline></reportHeadline>
