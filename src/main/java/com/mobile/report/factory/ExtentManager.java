@@ -10,7 +10,6 @@ import com.aventstack.extentreports.reporter.configuration.Theme;
 import com.mobile.utils.CommandPrompt;
 import com.mobile.utils.ConfigurationManager;
 
-import java.net.URL;
 import java.util.Arrays;
 import java.util.List;
 
@@ -42,8 +41,8 @@ public class ExtentManager {
             String command = "node " + configFileManager.getProperty("APPIUM_JS_PATH") + " -v";
             appiumVersion = commandPrompt.runCommand(command);
 
-            extent.setSystemInfo("AppiumClient", "5.0.0-BETA6");
-            extent.setSystemInfo("AppiumServer", appiumVersion.replace("\n", ""));
+            extent.setSystemInfo("Appium Client", "5.0.0-BETA6");
+            extent.setSystemInfo("Appium Server", appiumVersion.replace("\n", ""));
             extent.setSystemInfo("Runner", configFileManager.getProperty("RUNNER"));
             List statusHierarchy = Arrays.asList(
                     Status.FATAL,
@@ -64,8 +63,8 @@ public class ExtentManager {
     private static ExtentHtmlReporter getHtmlReporter() {
 
         ExtentHtmlReporter htmlReporter = new ExtentHtmlReporter(filePath);
-        URL inputUrl = null;
 
+//        URL inputUrl = null;
 //        try {
 //            inputUrl = Thread.currentThread().getContextClassLoader().getResource("extent.xml");
 //        } catch (Exception e) {
@@ -83,7 +82,7 @@ public class ExtentManager {
         htmlReporter.loadXMLConfig(System.getProperty("user.dir") + "/extent.xml");
         // make the charts visible on report open
         htmlReporter.config().setChartVisibilityOnOpen(true);
-
+        htmlReporter.setAppendExisting(true);
         // report title
         //String documentTitle = prop.getProperty("documentTitle", "aventstack - Extent");
         htmlReporter.config().setDocumentTitle("Mobile Automation");

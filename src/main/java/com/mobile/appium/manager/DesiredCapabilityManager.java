@@ -24,7 +24,6 @@ public class DesiredCapabilityManager {
 
     public DesiredCapabilities androidNative() {
 
-        System.out.println("Setting Android Desired Capabilities:");
         DesiredCapabilities androidCapabilities = new DesiredCapabilities();
         androidCapabilities.setCapability(MobileCapabilityType.PLATFORM_NAME, "Android");
         androidCapabilities.setCapability(MobileCapabilityType.DEVICE_NAME, "Android");
@@ -39,8 +38,6 @@ public class DesiredCapabilityManager {
         androidCapabilities
                 .setCapability(MobileCapabilityType.APP,
                         prop.getProperty("ANDROID_APP_PATH"));
-        System.out.println(DeviceManager.getDeviceUDID() + Thread.currentThread().getId());
-
         androidCapabilities.setCapability(MobileCapabilityType.UDID, DeviceManager.getDeviceUDID());
         androidCapabilities.setCapability(AndroidMobileCapabilityType.SYSTEM_PORT,
                 availablePorts.getPort());
@@ -49,6 +46,7 @@ public class DesiredCapabilityManager {
     }
 
     public DesiredCapabilities androidWeb() {
+
         DesiredCapabilities androidWebCapabilities = new DesiredCapabilities();
         androidWebCapabilities.setCapability(MobileCapabilityType.DEVICE_NAME, "Android");
         androidWebCapabilities
@@ -63,7 +61,6 @@ public class DesiredCapabilityManager {
     public DesiredCapabilities iosNative() {
 
         DesiredCapabilities iOSCapabilities = new DesiredCapabilities();
-        System.out.println("Setting iOS Desired Capabilities:");
 
         iOSCapabilities.setCapability(MobileCapabilityType.PLATFORM_NAME,
                 "iOS");

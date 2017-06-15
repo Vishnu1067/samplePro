@@ -26,14 +26,17 @@ public class DeviceManager {
     }
 
     public static String getDeviceUDID() {
+
         return deviceUDID.get();
     }
 
     protected static void setDeviceUDID(String udID) {
+
         deviceUDID.set(udID);
     }
 
     public static MobilePlatform getMobilePlatform() {
+
         if (DeviceManager.getDeviceUDID() != null && prop.getProperty("Platform").equalsIgnoreCase("ios")) {
             return MobilePlatform.IOS;
         } else {
@@ -42,6 +45,7 @@ public class DeviceManager {
     }
 
     public String getDeviceModel() throws InterruptedException, IOException {
+
         if (getMobilePlatform().equals(MobilePlatform.ANDROID) && prop.getProperty("Platform").equalsIgnoreCase("android")) {
             return androidDevice.getDeviceModel();
         } else if (getMobilePlatform().equals(MobilePlatform.IOS) && prop.getProperty("Platform").equalsIgnoreCase("ios")) {

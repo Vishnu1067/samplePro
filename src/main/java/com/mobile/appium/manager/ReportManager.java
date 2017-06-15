@@ -6,10 +6,8 @@ import com.aventstack.extentreports.Status;
 import com.mobile.report.factory.ExtentTestManager;
 import com.mobile.utils.GetDescriptionForChildNode;
 import org.testng.IInvokedMethod;
-import org.testng.ITestResult;
 import org.testng.annotations.Test;
 
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -19,10 +17,9 @@ import java.util.Collections;
  */
 public class ReportManager {
 
-    private TestLogger testLogger;
     private DeviceManager deviceManager;
-    public ThreadLocal<ExtentTest> parentTest = new ThreadLocal<ExtentTest>();
-    public ThreadLocal<ExtentTest> test = new ThreadLocal<ExtentTest>();
+    public ThreadLocal<ExtentTest> parentTest = new ThreadLocal<>();
+    public ThreadLocal<ExtentTest> test = new ThreadLocal<>();
     public ExtentTest parent;
     public ExtentTest child;
     private GetDescriptionForChildNode getDescriptionForChildNode;
@@ -30,28 +27,22 @@ public class ReportManager {
 
 
     public ReportManager() {
-        testLogger = new TestLogger();
         deviceManager = new DeviceManager();
-    }
-
-    public void startLogResults(String methodName, String className) throws FileNotFoundException {
-        testLogger.startLogging(methodName, className);
-    }
-
-    public void endLogTestResults(ITestResult result) throws IOException, InterruptedException {
-        testLogger.endLog(result, deviceManager.getDeviceModel(), test);
     }
 
     public ExtentTest createParentNodeExtent(String methodName, String testDescription)
             throws IOException, InterruptedException {
+
         parent = ExtentTestManager.createTest(methodName, testDescription,
                 deviceManager.getDeviceModel()
                         + DeviceManager.getDeviceUDID());
         parentTest.set(parent);
+
         ExtentTestManager.getTest().log(Status.INFO,
                 "<a target=\"_parent\" href=" + "appiumlogs/"
-                        + DeviceManager.getDeviceUDID() + "__" + methodName
-                        + ".txt" + ">AppiumServerLogs</a>");
+                        + DeviceManager.getDeviceUDID().replaceAll("\\W", "_") + "__"
+                        + methodName.replace(" ", "_")
+                        + ".txt" + ">Appium Server Logs</a>");
         return parent;
     }
 
@@ -93,8 +84,8 @@ public class ReportManager {
         }
     }
 
-    public void createChildNodeWithCategory(String methodName,
-                                            String tags) {
+    public void createChildNodeWithCategory(String methodName, String tags) {
+
         child = parentTest.get().createNode(methodName, category
                 + DeviceManager.getDeviceUDID()).assignCategory(tags);
         test.set(child);

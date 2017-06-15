@@ -49,6 +49,7 @@ public class AppiumDriverManager {
         AppiumDriver<MobileElement> currentDriverSession;
 
         if (prop.getProperty("APP_TYPE").equalsIgnoreCase("web")) {
+
             currentDriverSession = new AndroidDriver<>(appiumServerManager.getAppiumUrl(),
                     desiredCapabilityManager.androidWeb());
             AppiumDriverManager.setDriver(currentDriverSession);
@@ -57,14 +58,14 @@ public class AppiumDriverManager {
 
             if (System.getProperty("os.name").toLowerCase().contains("mac")) {
 
-                if (iosDeviceConfiguration.deviceUDIDiOS
-                        .contains(DeviceManager.getDeviceUDID())) {
+                if (iosDeviceConfiguration.deviceUDIDiOS.contains(DeviceManager.getDeviceUDID())) {
+
                     currentDriverSession = new IOSDriver<>(appiumServerManager.getAppiumUrl(),
                             iosCaps.orElse(desiredCapabilityManager.iosNative()));
                     AppiumDriverManager.setDriver(currentDriverSession);
 
-                } else if (!iosDeviceConfiguration.deviceUDIDiOS
-                        .contains(DeviceManager.getDeviceUDID())) {
+                } else if (!iosDeviceConfiguration.deviceUDIDiOS.contains(DeviceManager.getDeviceUDID())) {
+
                     currentDriverSession = new AndroidDriver<>(appiumServerManager.getAppiumUrl(),
                             androidCaps.orElse(desiredCapabilityManager.androidNative()));
                     AppiumDriverManager.setDriver(currentDriverSession);
@@ -96,10 +97,10 @@ public class AppiumDriverManager {
         } else {
             iOS = getDesiredIOSCapabilities(iOS, userSpecifiediOSCaps);
         }
-        System.out.println("Caps generated" + android + iOS);
+
         startAppiumDriver(Optional.ofNullable(iOS), Optional.ofNullable(android));
         try {
-            Thread.sleep(6000);
+            Thread.sleep(5000);
         } catch (Exception e) {
 
         }
@@ -136,13 +137,12 @@ public class AppiumDriverManager {
             if (prop.getProperty("ANDROID_CAPS") != null) {
 
                 androidJsonFilePath = prop.getProperty("ANDROID_CAPS");
-                System.out.println("Picking Caps from property file");
                 desiredCapabilityBuilder
                         .buildDesiredCapability(androidJsonFilePath);
                 android = DesiredCapabilityBuilder.getDesiredCapability();
 
             } else if (new File(userSpecifiedAndroidCaps).exists()) {
-                System.out.println("Picking Caps from default path");
+
                 androidJsonFilePath = userSpecifiedAndroidCaps;
                 desiredCapabilityBuilder
                         .buildDesiredCapability(androidJsonFilePath);
