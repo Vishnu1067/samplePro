@@ -15,6 +15,9 @@ public class JsonParser {
     Object object;
 
     public JsonParser(String filePath) {
+
+        System.out.println("******* JSON File Path " + filePath + "  ***********");
+
         try {
             object = parser.parse(new FileReader(filePath));
         } catch (IOException e) {
@@ -25,10 +28,11 @@ public class JsonParser {
         JSONArray array = new JSONArray();
         array.add(object);
         Object o = ((JSONArray) object).get(0);
-        object = (JSONObject) o;
+        object = o;
     }
 
     public JSONObject getJsonParsedObject() {
+
         return (JSONObject) object;
     }
 }

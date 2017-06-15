@@ -234,10 +234,10 @@ public class IOSDeviceConfiguration {
             String serverPath = prop.getProperty("APPIUM_JS_PATH");
             File file = new File(serverPath);
             File currentPath = new File(file.getParent());
-            System.out.println(currentPath);
             file = new File(currentPath + "/.." + "/..");
             File executePermission =
                     new File(file.getCanonicalPath() + "/bin/ios-webkit-debug-proxy-launcher.js");
+
             if (executePermission.exists()) {
                 if (executePermission.canExecute() == false) {
                     executePermission.setExecutable(true);

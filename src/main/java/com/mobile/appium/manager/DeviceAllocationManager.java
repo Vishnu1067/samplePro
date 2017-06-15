@@ -37,10 +37,10 @@ public class DeviceAllocationManager {
     private void initializeDevices() {
 
         try {
-            if (System.getProperty("os.name").toLowerCase().contains("mac") && prop.getProperty("Platform").equalsIgnoreCase("ios")) {
+            if (System.getProperty("os.name").toLowerCase().contains("mac")) {
 
-                if (iosDevice.getIOSUDID() != null) {
-                    System.out.println("Adding iOS devices");
+                if (iosDevice.getIOSUDID() != null && prop.getProperty("Platform").equalsIgnoreCase("ios")) {
+
                     if (IOSDeviceConfiguration.validDeviceIds.size() > 0) {
                         devices.addAll(IOSDeviceConfiguration.validDeviceIds);
                     } else {
@@ -55,20 +55,17 @@ public class DeviceAllocationManager {
             for (String device : devices) {
                 deviceMapping.put(device, true);
             }
-            System.out.println(deviceMapping);
 
         } catch (Exception e) {
             e.printStackTrace();
-            System.out.println("Failed to initialize framework");
         }
     }
 
     private void getAndroidDeviceSerial() {
 
         if (androidDevice.getDeviceSerial() != null) {
-            System.out.println("Adding Android devices");
+
             if (AndroidDeviceConfiguration.validDeviceIds.size() > 0) {
-                System.out.println("Adding Devices from DeviceList Provided");
                 devices.addAll(AndroidDeviceConfiguration.validDeviceIds);
             } else {
                 devices.addAll(AndroidDeviceConfiguration.deviceSerial);
@@ -77,6 +74,7 @@ public class DeviceAllocationManager {
     }
 
     public ArrayList<String> getDevices() {
+
         return devices;
     }
 
@@ -88,11 +86,9 @@ public class DeviceAllocationManager {
         for (String device : devices) {
             Thread t = Thread.currentThread();
             t.setName("Thread_" + i);
-            System.out.println("Parallel Thread is::" + t.getName());
             i++;
             if (deviceMapping.get(device)) {
                 deviceMapping.put(device, false);
-                System.out.println(device);
                 return device;
             }
         }
