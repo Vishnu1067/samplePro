@@ -3,7 +3,7 @@ import cucumber.api.CucumberOptions;
 import cucumber.api.testng.AbstractTestNGCucumberTests;
 
 @CucumberOptions(strict = true,
-    features = {"classpath:features/Test12.feature"},
+    features = {"classpath:features/PGSearchResidentialBuyType.feature"},
     format = {"json:target/2.json", "pretty"},
     monochrome = false,
     tags = {"@smoke"},

@@ -5,8 +5,6 @@ import com.mobile.configuration.IOSDeviceConfiguration;
 import com.mobile.utils.ConfigurationManager;
 import com.mobile.utils.MobilePlatform;
 
-import java.io.IOException;
-
 /**
  * Device Manager - Handles all device related information's e.g UDID, Model, etc
  */
@@ -44,7 +42,7 @@ public class DeviceManager {
         }
     }
 
-    public String getDeviceModel() throws InterruptedException, IOException {
+    public String getDeviceModel() {
 
         if (getMobilePlatform().equals(MobilePlatform.ANDROID) && prop.getProperty("Platform").equalsIgnoreCase("android")) {
             return androidDevice.getDeviceModel();
@@ -54,7 +52,15 @@ public class DeviceManager {
         return null;
     }
 
-    public String getDeviceCategory() throws Exception {
+    public String getDeviceName() {
+
+        if (getMobilePlatform().equals(MobilePlatform.ANDROID) && prop.getProperty("Platform").equalsIgnoreCase("android")) {
+            return androidDevice.getDeviceName();
+        }
+        return null;
+    }
+
+    public String getDeviceCategory() {
 
         if (iosDevice.deviceUDIDiOS.contains(DeviceManager.getDeviceUDID()) && prop.getProperty("Platform").equalsIgnoreCase("ios")) {
             return iosDevice.getDeviceName().replace(" ", "_");
