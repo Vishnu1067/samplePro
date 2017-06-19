@@ -1,4 +1,4 @@
-#//@smoke
+#@smoke
 #
 #Feature: Word Press Sample App
 #

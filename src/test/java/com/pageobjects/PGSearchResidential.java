@@ -1,7 +1,7 @@
 package com.pageobjects;
 
 import com.aventstack.extentreports.Status;
-import com.mobile.report.factory.ExtentTestManager;
+import com.mobile.appium.manager.ReportManager;
 import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.MobileElement;
 import io.appium.java_client.pagefactory.AndroidFindBy;
@@ -18,11 +18,13 @@ import static com.mobile.appium.manager.AppiumDriverManager.getDriver;
 public class PGSearchResidential {
 
     AppiumDriver<MobileElement> driver;
+    ReportManager reportManager;
 
     public PGSearchResidential(AppiumDriver<MobileElement> driver) {
 
         PageFactory.initElements(new AppiumFieldDecorator(driver), this);
         this.driver = driver;
+        reportManager = ReportManager.getInstance();
     }
 
     @AndroidFindBy(xpath = "//*[@class='android.support.v7.app.ActionBar$Tab' and @index='0']")
@@ -149,7 +151,7 @@ public class PGSearchResidential {
 
     public void propertiesCount() {
         waitForElement(propertiesCount, 30);
-        ExtentTestManager.getTest().log(Status.INFO, "Total Properties List : " + propertiesCount.getText());
+        reportManager.test.get().log(Status.INFO, "Total Properties List : " + propertiesCount.getText());
     }
 
     public void waitForElement(WebElement element, int waitTime) {

@@ -24,9 +24,18 @@ public class ReportManager {
     public ExtentTest child;
     private GetDescriptionForChildNode getDescriptionForChildNode;
     public String category = null;
+    private static ReportManager instance;
 
 
-    public ReportManager() {
+    public static ReportManager getInstance() {
+
+        if (instance == null) {
+            instance = new ReportManager();
+        }
+        return instance;
+    }
+
+    private ReportManager() {
         deviceManager = new DeviceManager();
     }
 

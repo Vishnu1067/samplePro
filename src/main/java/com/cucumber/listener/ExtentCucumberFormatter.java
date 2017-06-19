@@ -43,7 +43,7 @@ public class ExtentCucumberFormatter implements Reporter, Formatter {
 
     public ExtentCucumberFormatter() {
 
-        reportManager = new ReportManager();
+        reportManager = ReportManager.getInstance();
         appiumServerManager = new AppiumServerManager();
         appiumDriverManager = new AppiumDriverManager();
         deviceAllocationManager = DeviceAllocationManager.getInstance();
