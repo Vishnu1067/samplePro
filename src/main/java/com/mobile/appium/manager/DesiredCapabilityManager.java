@@ -3,6 +3,7 @@ package com.mobile.appium.manager;
 import com.mobile.configuration.IOSDeviceConfiguration;
 import com.mobile.utils.AvailablePorts;
 import com.mobile.utils.ConfigurationManager;
+import com.mobile.utils.MobilePlatform;
 import io.appium.java_client.remote.AndroidMobileCapabilityType;
 import io.appium.java_client.remote.AutomationName;
 import io.appium.java_client.remote.IOSMobileCapabilityType;
@@ -14,26 +15,27 @@ public class DesiredCapabilityManager {
     private final ConfigurationManager prop;
     private AvailablePorts availablePorts;
     private IOSDeviceConfiguration iosDevice;
+    private DeviceManager deviceManager;
 
     public DesiredCapabilityManager() {
 
         prop = ConfigurationManager.getInstance();
         availablePorts = new AvailablePorts();
         iosDevice = new IOSDeviceConfiguration();
+        deviceManager = new DeviceManager();
     }
 
     public DesiredCapabilities androidNative() {
 
         DesiredCapabilities androidCapabilities = new DesiredCapabilities();
-        androidCapabilities.setCapability(MobileCapabilityType.PLATFORM_NAME, "Android");
-        androidCapabilities.setCapability(MobileCapabilityType.DEVICE_NAME, "Android");
+        androidCapabilities.setCapability(MobileCapabilityType.PLATFORM_NAME, MobilePlatform.ANDROID);
+        androidCapabilities.setCapability(MobileCapabilityType.DEVICE_NAME, deviceManager.getDeviceName());
         androidCapabilities.setCapability(AndroidMobileCapabilityType.APP_ACTIVITY,
                 prop.getProperty("APP_ACTIVITY"));
         androidCapabilities.setCapability(AndroidMobileCapabilityType.APP_PACKAGE,
                 prop.getProperty("APP_PACKAGE"));
         androidCapabilities.setCapability(MobileCapabilityType.AUTOMATION_NAME,
                 AutomationName.ANDROID_UIAUTOMATOR2);
-
         //check Selendroid (androidCapabilities);
         androidCapabilities
                 .setCapability(MobileCapabilityType.APP,
@@ -48,7 +50,7 @@ public class DesiredCapabilityManager {
     public DesiredCapabilities androidWeb() {
 
         DesiredCapabilities androidWebCapabilities = new DesiredCapabilities();
-        androidWebCapabilities.setCapability(MobileCapabilityType.DEVICE_NAME, "Android");
+        androidWebCapabilities.setCapability(MobileCapabilityType.DEVICE_NAME, MobilePlatform.ANDROID);
         androidWebCapabilities
                 .setCapability(MobileCapabilityType.BROWSER_NAME,
                         prop.getProperty("BROWSER_TYPE"));
@@ -63,7 +65,7 @@ public class DesiredCapabilityManager {
         DesiredCapabilities iOSCapabilities = new DesiredCapabilities();
 
         iOSCapabilities.setCapability(MobileCapabilityType.PLATFORM_NAME,
-                "iOS");
+                MobilePlatform.IOS);
         iOSCapabilities.setCapability(MobileCapabilityType.PLATFORM_VERSION,
                 "10.0");
         iOSCapabilities.setCapability(MobileCapabilityType.APP,

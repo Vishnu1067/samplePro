@@ -24,9 +24,18 @@ public class ReportManager {
     public ExtentTest child;
     private GetDescriptionForChildNode getDescriptionForChildNode;
     public String category = null;
+    private static ReportManager instance;
 
 
-    public ReportManager() {
+    public static ReportManager getInstance() {
+
+        if (instance == null) {
+            instance = new ReportManager();
+        }
+        return instance;
+    }
+
+    private ReportManager() {
         deviceManager = new DeviceManager();
     }
 
@@ -34,8 +43,8 @@ public class ReportManager {
             throws IOException, InterruptedException {
 
         parent = ExtentTestManager.createTest(methodName, testDescription,
-                deviceManager.getDeviceModel()
-                        + DeviceManager.getDeviceUDID());
+                deviceManager.getDeviceName()
+                        + "__" + DeviceManager.getDeviceUDID());
         parentTest.set(parent);
 
         ExtentTestManager.getTest().log(Status.INFO,
@@ -86,8 +95,8 @@ public class ReportManager {
 
     public void createChildNodeWithCategory(String methodName, String tags) {
 
-        child = parentTest.get().createNode(methodName, category
-                + DeviceManager.getDeviceUDID()).assignCategory(tags);
+        child = parentTest.get().createNode(methodName,
+                DeviceManager.getDeviceUDID()).assignCategory(tags);
         test.set(child);
     }
 }
