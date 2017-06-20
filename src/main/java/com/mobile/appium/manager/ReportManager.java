@@ -36,7 +36,6 @@ public class ReportManager {
     }
 
     private ReportManager() {
-
         deviceManager = new DeviceManager();
     }
 

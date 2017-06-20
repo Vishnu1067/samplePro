@@ -136,8 +136,8 @@ public class ExtentCucumberFormatter implements Reporter, Formatter {
 
         if (prop.getProperty("RUNNER").equalsIgnoreCase("parallel")) {
 
-            String deviceUDID = deviceAllocationManager.getNextAvailableDeviceId();
 
+            String deviceUDID = deviceAllocationManager.getNextAvailableDeviceId();
             String[] deviceThreadNumber = Thread.currentThread().getName().toString().split("_");
 
             try {
