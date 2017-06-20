@@ -76,7 +76,7 @@ public class AppiumServerManager {
 
         System.out.println(
                 "**************************************************************************\n");
-        System.out.println("Starting Appium Server to handle Android Device " + DeviceManager.getDeviceUDID() + "\n");
+        System.out.println("Starting Appium Server to handle Android Device : " + DeviceManager.getDeviceUDID() + "\n");
         System.out.println(
                 "**************************************************************************\n");
 
@@ -125,7 +125,7 @@ public class AppiumServerManager {
 
         System.out
                 .println("**********************************************************************\n");
-        System.out.println("Starting Appium Server to handle IOS " + DeviceManager.getDeviceUDID() + "\n");
+        System.out.println("Starting Appium Server to handle IOS : " + DeviceManager.getDeviceUDID() + "\n");
         System.out
                 .println("**********************************************************************\n");
 

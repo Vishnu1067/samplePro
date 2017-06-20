@@ -157,7 +157,7 @@ public class AndroidDeviceConfiguration {
 
         deviceName =
                 cmd.runCommand("adb -s " + DeviceManager.getDeviceUDID()
-                        + " shell getprop ro.product.model");
+                        + " shell getprop ro.product.name");
         return deviceName.trim();
     }
 

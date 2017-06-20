@@ -102,7 +102,7 @@ public class DeviceAllocationManager {
 
     public void allocateDevice(String device, String deviceUDID) {
 
-        if (device == null) {
+        if (device == null || device.equals("")) {
             DeviceManager.setDeviceUDID(deviceUDID);
         } else {
             DeviceManager.setDeviceUDID(device);

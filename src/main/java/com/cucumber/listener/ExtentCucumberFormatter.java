@@ -136,8 +136,8 @@ public class ExtentCucumberFormatter implements Reporter, Formatter {
 
         if (prop.getProperty("RUNNER").equalsIgnoreCase("parallel")) {
 
-            deviceAllocationManager.getNextAvailableDeviceId();
 
+            String deviceUDID = deviceAllocationManager.getNextAvailableDeviceId();
             String[] deviceThreadNumber = Thread.currentThread().getName().toString().split("_");
 
             try {
@@ -151,7 +151,7 @@ public class ExtentCucumberFormatter implements Reporter, Formatter {
                 deviceAllocationManager.allocateDevice(
                         xpathXML.parseXML(Integer
                                 .parseInt(deviceThreadNumber[1])),
-                        deviceSingleton.getDeviceUDID());
+                        deviceUDID);
 
                 if (DeviceManager.getDeviceUDID() == null) {
                     System.out.println("No devices are free to run test or Failed to run test");
@@ -335,7 +335,6 @@ public class ExtentCucumberFormatter implements Reporter, Formatter {
         } catch (Exception e) {
 
         }
-
     }
 
 }

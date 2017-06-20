@@ -1,7 +1,7 @@
 package com.pageobjects;
 
-import com.aventstack.extentreports.Status;
 import com.mobile.appium.manager.ReportManager;
+import com.mobile.report.factory.ExtentTestManager;
 import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.MobileElement;
 import io.appium.java_client.pagefactory.AndroidFindBy;
@@ -151,7 +151,7 @@ public class PGSearchResidential {
 
     public void propertiesCount() {
         waitForElement(propertiesCount, 30);
-        reportManager.test.get().log(Status.INFO, "Total Properties List : " + propertiesCount.getText());
+        ExtentTestManager.logger("Total Properties List : " + propertiesCount.getText());
     }
 
     public void waitForElement(WebElement element, int waitTime) {

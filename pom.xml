@@ -201,6 +201,7 @@
                             <featuresDirectory>src/test/resources/features/</featuresDirectory>
                             <cucumberOutputDir>target</cucumberOutputDir>
                             <tags>"@smoke"</tags>
+                            <!--<tags>"@smoke_web"</tags>-->
                             <useTestNG>true</useTestNG>
                         </configuration>
                     </execution>
