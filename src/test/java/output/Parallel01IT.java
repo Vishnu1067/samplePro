@@ -3,7 +3,7 @@ import cucumber.api.CucumberOptions;
 import cucumber.api.testng.AbstractTestNGCucumberTests;
 
 @CucumberOptions(strict = true,
-    features = {"classpath:features/Test.feature"},
+    features = {"classpath:features/PGDashboard.feature"},
     format = {"json:target/1.json", "pretty"},
     monochrome = false,
     tags = {"@smoke"},

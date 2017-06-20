@@ -151,6 +151,16 @@ public class AndroidDeviceConfiguration {
 
     }
 
+    public String getDeviceName() {
+
+        String deviceName;
+
+        deviceName =
+                cmd.runCommand("adb -s " + DeviceManager.getDeviceUDID()
+                        + " shell getprop ro.product.name");
+        return deviceName.trim();
+    }
+
     /**
      * This method gets the device OS API Level
      */

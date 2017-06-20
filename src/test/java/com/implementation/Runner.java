@@ -22,7 +22,7 @@ public class Runner {
     public void testCukesRunner() {
 
         ParallelThread cucumberParallelThread = new ParallelThread();
-        boolean hasFailures = cucumberParallelThread.runner("output");
-        Assert.assertFalse(hasFailures, "Testcases have failed in parallel execution");
+        boolean hasFailures = cucumberParallelThread.runner();
+        Assert.assertFalse(hasFailures, "Test cases have failed in parallel execution");
     }
 }

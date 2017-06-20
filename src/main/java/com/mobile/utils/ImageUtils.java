@@ -3,12 +3,8 @@ package com.mobile.utils;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.madgag.gif.fmsware.AnimatedGifEncoder;
-import com.mobile.configuration.AndroidDeviceConfiguration;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.filefilter.TrueFileFilter;
-import org.im4java.core.ConvertCmd;
-import org.im4java.core.IM4JavaException;
-import org.im4java.core.IMOperation;
 import org.testng.annotations.Test;
 
 import javax.imageio.ImageIO;
@@ -21,104 +17,23 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import static com.mobile.utils.TestWriteUtils.GSON;
-
 
 public class ImageUtils {
 
 
-    public void wrapDeviceFrames(String deviceFrame, String deviceScreenToBeFramed,
-                                 String framedDeviceScreen)
-            throws InterruptedException, IOException, IM4JavaException {
-        IMOperation op = new IMOperation();
-        op.addImage(deviceFrame);
-        op.addImage(deviceScreenToBeFramed);
-        op.gravity("center");
-        op.composite();
-        op.opaque("none");
-        op.addImage(framedDeviceScreen);
-        ConvertCmd cmd = new ConvertCmd();
-        cmd.run(op);
-    }
-
-    public static List<TestResults> creatResultsSet() throws Exception {
-
-
-        List<TestResults> testResultList = new ArrayList<TestResults>();
-
-
-        File dir = new File(System.getProperty("user.dir") + "/target/screenshot");
-
-        File[] oSList = dir.listFiles();
-
-        for (File oFile : oSList) {
-
-            File[] dList = oFile.listFiles();
-
-            for (File dFile : dList) {
-                TestResults testResult = new TestResults();
-                if (dFile.isDirectory()) {
-                    testResult.setDeviceUDID(dFile.getName());
-
-                    List<TestCases> testCaseList = new ArrayList<TestCases>();
-                    File[] tList = dFile.listFiles();
-                    for (File tFile : tList) {
-
-                        TestCases testCase = new TestCases();
-                        if (tFile.isDirectory()) {
-                            testCase.setTestCase(tFile.getName());
-
-                            File[] mList = tFile.listFiles();
-                            List<Testmethods> testMethodList = new ArrayList<Testmethods>();
-                            for (File mFile : mList) {
-
-                                Testmethods testMethod = new Testmethods();
-                                testMethod.setMethodName(mFile.getName());
-                                if (mFile.isDirectory()) {
-                                    File[] sList = mFile.listFiles();
-                                    String filePath = null;
-                                    for (File sFile : sList) {
-                                        if (sFile.isFile() && sFile.getCanonicalPath()
-                                                .contains("result")) {
-                                            filePath = sFile.getCanonicalPath();
-                                            testResult.setDeviceName(sFile.getName().split("_")[1]);
-                                            testResult.setDeviceOS(new AndroidDeviceConfiguration()
-                                                    .deviceOS(testResult.getDeviceUDID()));
-
-                                        }
-                                    }
-                                    testMethod.setScreenShots(filePath);
-                                }
-                                if (testMethod.getScreenShots() != null) {
-                                    testMethodList.add(testMethod);
-                                }
-                            }
-
-                            if (testMethodList.size() > 0) {
-                                testCase.setTestMethod(testMethodList);
-                            }
-                        }
-                        if (testCase.testMethod != null) {
-                            testCaseList.add(testCase);
-                        }
-
-                    }
-
-                    testResult.setTestCases(testCaseList);
-                }
-                testResultList.add(testResult);
-
-            }
-        }
-
-
-        System.out.println("Writing the Test Results into JSON");
-
-        FileWriter writer = new FileWriter(new File("Report.json"));
-        GSON.toJson(testResultList, writer);
-        writer.close();
-        return testResultList;
-    }
+//    public void wrapDeviceFrames(String deviceFrame, String deviceScreenToBeFramed,
+//                                 String framedDeviceScreen)
+//            throws InterruptedException, IOException, IM4JavaException {
+//        IMOperation op = new IMOperation();
+//        op.addImage(deviceFrame);
+//        op.addImage(deviceScreenToBeFramed);
+//        op.gravity("center");
+//        op.composite();
+//        op.opaque("none");
+//        op.addImage(framedDeviceScreen);
+//        ConvertCmd cmd = new ConvertCmd();
+//        cmd.run(op);
+//    }
 
     public static void createJSonForHtml() throws IOException {
         File dir = new File(System.getProperty("user.dir") + "/target/screenshot/");

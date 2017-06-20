@@ -82,7 +82,7 @@
         <dependency>
             <groupId>com.aventstack</groupId>
             <artifactId>extentreports</artifactId>
-            <version>3.0.5</version>
+            <version>3.0.6</version>
         </dependency>
         <dependency>
             <groupId>org.reflections</groupId>
@@ -149,6 +149,12 @@
             <artifactId>mongodb-driver</artifactId>
             <version>3.0.4</version>
         </dependency>
+        <dependency>
+            <groupId>com.google.android</groupId>
+            <artifactId>android</artifactId>
+            <version>4.1.1.4</version>
+            <scope>provided</scope>
+        </dependency>
 
     </dependencies>
 
@@ -195,6 +201,7 @@
                             <featuresDirectory>src/test/resources/features/</featuresDirectory>
                             <cucumberOutputDir>target</cucumberOutputDir>
                             <tags>"@smoke"</tags>
+                            <!--<tags>"@smoke_web"</tags>-->
                             <useTestNG>true</useTestNG>
                         </configuration>
                     </execution>

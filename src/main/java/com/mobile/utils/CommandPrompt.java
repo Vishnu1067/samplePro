@@ -5,6 +5,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 
 /**
@@ -48,6 +49,7 @@ public class CommandPrompt {
 
             bufferedReader = getBufferedReader(command);
 
+            String ff = bufferedReader.readLine();
             while ((line = bufferedReader.readLine()) != null) {
 
                 allLine = allLine + "" + line + "\n";
@@ -109,6 +111,7 @@ public class CommandPrompt {
             commands.add("-c");
             commands.add(command);
             ProcessBuilder builder = new ProcessBuilder(commands);
+            Map<String, String> environ = builder.environment();
 
             final Process process = builder.start();
             is = process.getInputStream();

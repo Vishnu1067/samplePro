@@ -7,24 +7,17 @@ import com.mobile.configuration.IOSDeviceConfiguration;
 import com.mobile.report.factory.ExtentManager;
 import com.mobile.report.factory.ExtentTestManager;
 import com.mobile.utils.ConfigurationManager;
-import com.mobile.utils.ImageUtils;
 import com.mobile.utils.MobilePlatform;
 import com.mobile.video.recoder.XpathXML;
 import gherkin.formatter.Formatter;
 import gherkin.formatter.Reporter;
 import gherkin.formatter.model.*;
 import org.apache.commons.io.FileUtils;
-import org.im4java.core.IM4JavaException;
 import org.openqa.selenium.OutputType;
 
 import java.io.File;
-import java.io.IOException;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Map;
 
 import static com.mobile.appium.manager.AppiumDriverManager.getDriver;
 
@@ -43,26 +36,14 @@ public class ExtentCucumberFormatter implements Reporter, Formatter {
     private AndroidDeviceConfiguration androidDevice;
     private IOSDeviceConfiguration iosDevice;
     public String deviceModel;
-    public ImageUtils imageUtils = new ImageUtils();
     public XpathXML xpathXML = new XpathXML();
     private ConfigurationManager prop;
     private String CI_BASE_URI = null;
 
 
-    private static final Map<String, String> MIME_TYPES_EXTENSIONS = new HashMap() {
-        {
-            this.put("image/bmp", "bmp");
-            this.put("image/gif", "gif");
-            this.put("image/jpeg", "jpg");
-            this.put("image/png", "png");
-            this.put("image/svg+xml", "svg");
-            this.put("video/ogg", "ogg");
-        }
-    };
-
     public ExtentCucumberFormatter() {
 
-        reportManager = new ReportManager();
+        reportManager = ReportManager.getInstance();
         appiumServerManager = new AppiumServerManager();
         appiumDriverManager = new AppiumDriverManager();
         deviceAllocationManager = DeviceAllocationManager.getInstance();
@@ -79,37 +60,40 @@ public class ExtentCucumberFormatter implements Reporter, Formatter {
     public void result(Result result) {
 
         if ("passed".equals(result.getStatus())) {
+
             reportManager.test.get().log(Status.PASS, testSteps.poll().getName());
+
         } else if ("failed".equals(result.getStatus())) {
+
             String failed_StepName = testSteps.poll().getName();
             reportManager.test.get().log(Status.FAIL, result.getErrorMessage());
             String context = getDriver().getContext();
             boolean contextChanged = false;
-            if ("Android".equals(getDriver()
-                    .getSessionDetails().get("platformName")
-                    .toString())
+
+            if ("Android".equals(getDriver().getSessionDetails().get("platformName").toString())
                     && !"NATIVE_APP".equals(context)) {
+
                 getDriver().context("NATIVE_APP");
                 contextChanged = true;
             }
-            File scrFile = (getDriver())
+            File srcFile = (getDriver())
                     .getScreenshotAs(OutputType.FILE);
+
             if (contextChanged) {
                 getDriver().context(context);
             }
-            if (getDriver().getSessionDetails()
-                    .get("platformName").toString().equals("Android")) {
-                deviceModel = androidDevice.getDeviceModel();
-                screenShotAndFrame(failed_StepName, scrFile, "android");
-            } else if (getDriver().getSessionDetails().get("platformName")
-                    .toString().equals("iOS")) {
+            if (getDriver().getSessionDetails().get("platformName").toString().equals("Android")) {
 
-                deviceModel =
-                        iosDevice.getIOSDeviceProductTypeAndVersion();
-                screenShotAndFrame(failed_StepName, scrFile, "iPhone");
+                deviceModel = androidDevice.getDeviceModel();
+                //screenShotAndFrame(failed_StepName, scrFile, "android");
+
+            } else if (getDriver().getSessionDetails().get("platformName").toString().equals("iOS")) {
+
+                deviceModel = iosDevice.getIOSDeviceProductTypeAndVersion();
+                //screenShotAndFrame(failed_StepName, scrFile, "iPhone");
             }
 
-            attachScreenShotToReport(failed_StepName);
+            attachScreenShotToReport(srcFile, failed_StepName);
 
         } else if ("skipped".equals(result.getStatus())) {
 
@@ -151,12 +135,11 @@ public class ExtentCucumberFormatter implements Reporter, Formatter {
         String tags = String.join(",", tagsArray);
 
         if (prop.getProperty("RUNNER").equalsIgnoreCase("parallel")) {
-            deviceAllocationManager.getNextAvailableDeviceId();
+
+            String deviceUDID = deviceAllocationManager.getNextAvailableDeviceId();
+
             String[] deviceThreadNumber = Thread.currentThread().getName().toString().split("_");
-            System.out.println(deviceThreadNumber);
-            System.out.println(Integer.parseInt(deviceThreadNumber[1])
-                    + prop.getProperty("RUNNER"));
-            System.out.println("Feature Tag Name::" + feature.getTags());
+
             try {
 
                 if (prop.getProperty("CI_BASE_URI") != null) {
@@ -164,28 +147,33 @@ public class ExtentCucumberFormatter implements Reporter, Formatter {
                 } else if (CI_BASE_URI == null || CI_BASE_URI.isEmpty()) {
                     CI_BASE_URI = System.getProperty("user.dir");
                 }
+
                 deviceAllocationManager.allocateDevice(
                         xpathXML.parseXML(Integer
                                 .parseInt(deviceThreadNumber[1])),
-                        deviceSingleton.getDeviceUDID());
+                        deviceUDID);
+
                 if (DeviceManager.getDeviceUDID() == null) {
                     System.out.println("No devices are free to run test or Failed to run test");
                 }
-                System.out.println(feature.getName());
+
                 reportManager.createParentNodeExtent(feature.getName(), "")
                         .assignCategory(tags);
                 appiumServerManager.startAppiumServer(feature.getName());
+
             } catch (Exception e) {
                 e.printStackTrace();
             }
 
         } else {
+
             try {
-                deviceAllocationManager.allocateDevice("",
-                        deviceSingleton.getDeviceUDID());
+
+                deviceAllocationManager.allocateDevice("", deviceSingleton.getDeviceUDID());
                 reportManager.createParentNodeExtent(feature.getName(), "")
                         .assignCategory(tags);
                 appiumServerManager.startAppiumServer(feature.getName());
+
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -211,10 +199,10 @@ public class ExtentCucumberFormatter implements Reporter, Formatter {
     public void startOfScenarioLifeCycle(Scenario scenario) {
         createAppiumInstance(scenario);
         this.testSteps = new LinkedList<>();
-        System.out.println(testSteps);
     }
 
     public void createAppiumInstance(Scenario scenario) {
+
         String[] tagsArray = getTagArray(scenario.getTags());
         String tags = String.join(",", tagsArray);
         try {
@@ -244,9 +232,10 @@ public class ExtentCucumberFormatter implements Reporter, Formatter {
 
     public void endOfScenarioLifeCycle(Scenario scenario) {
 
-        ExtentManager.getExtent().flush();
-        System.out.println("****** Quit Driver Instance ******* " + getDriver().toString());
-        getDriver().quit();
+        //ExtentManager.getExtent().flush();
+//        System.out.println("****** (endOfScenarioLifeCycle) Quit Driver Instance ******* " + getDriver().toString());
+//        getDriver().quit();
+//        appiumServerManager.stopAppiumServer();
     }
 
     public void done() {
@@ -261,96 +250,91 @@ public class ExtentCucumberFormatter implements Reporter, Formatter {
 
         ExtentManager.getExtent().flush();
         deviceAllocationManager.freeDevice();
-        System.out.println("****** Quit Driver Instance ******* " + getDriver().toString());
+        System.out.println("****** (eof) Quit Driver Instance ******* " + getDriver().toString());
         getDriver().quit();
+        appiumServerManager.stopAppiumServer();
     }
 
 
-    public void screenShotAndFrame(String failed_StepName, File scrFile, String device) {
+//    public void screenShotAndFrame(String failed_StepName, File scrFile, String device) {
+//
+//        try {
+//            File framePath =
+//                    new File(System.getProperty("user.dir") + "/src/test/resources/frames/");
+//
+//            String destFile = System.getProperty("user.dir") + "/target/screenshot/"
+//                    + device + "/"
+//                    + DeviceManager.getDeviceUDID().replaceAll("\\W", "_") + "/"
+//                    + deviceModel.replaceAll(" ", "_")
+//                    + "/failed_" + failed_StepName.replaceAll(" ", "_") + ".jpeg";
+//
+//            FileUtils.copyFile(scrFile, new File(destFile));
+//            File[] files1 = framePath.listFiles();
+//            if (framePath.exists()) {
+//                for (int i = 0; i < files1.length; i++) {
+//                    if (files1[i].isFile()) { //this line weeds out other directories/folders
+//                        Path p = Paths.get(files1[i].toString());
+//                        String fileName = p.getFileName().toString().toLowerCase();
+//                        if (deviceModel.toString().toLowerCase()
+//                                .contains(fileName.split(".png")[0].toLowerCase())) {
+//                            try {
+//                                imageUtils.wrapDeviceFrames(
+//                                        files1[i].toString(),
+//                                        System.getProperty("user.dir")
+//                                                + "/target/screenshot/" + device
+//                                                + "/" + DeviceManager.getDeviceUDID()
+//                                                .replaceAll("\\W", "_") + "/"
+//                                                + deviceModel + "/failed_"
+//                                                + failed_StepName.replaceAll(" ", "_") + ".jpeg",
+//                                        System.getProperty("user.dir")
+//                                                + "/target/screenshot/" + device
+//                                                + "/" + DeviceManager.getDeviceUDID()
+//                                                .replaceAll("\\W", "_") + "/"
+//                                                + deviceModel + "/failed_"
+//                                                + failed_StepName.replaceAll(" ", "_")
+//                                                + "_framed.jpeg");
+//                                break;
+//                            } catch (InterruptedException e) {
+//                                e.printStackTrace();
+//                            } catch (IM4JavaException e) {
+//                                e.printStackTrace();
+//                            }
+//                        }
+//                    }
+//                }
+//            }
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//            System.out.println("Resource Directory was not found");
+//        }
+//    }
 
-        try {
-            File framePath =
-                    new File(System.getProperty("user.dir") + "/src/test/resources/frames/");
-            FileUtils.copyFile(scrFile, new File(
-                    System.getProperty("user.dir") + "/target/screenshot/" + device + "/"
-                            + DeviceManager.getDeviceUDID()
-                            + "/" + deviceModel
-                            + "/failed_" + failed_StepName.replaceAll(" ", "_") + ".jpeg"));
-            File[] files1 = framePath.listFiles();
-            if (framePath.exists()) {
-                for (int i = 0; i < files1.length; i++) {
-                    if (files1[i].isFile()) { //this line weeds out other directories/folders
-                        Path p = Paths.get(files1[i].toString());
-                        String fileName = p.getFileName().toString().toLowerCase();
-                        if (deviceModel.toString().toLowerCase()
-                                .contains(fileName.split(".png")[0].toLowerCase())) {
-                            try {
-                                imageUtils.wrapDeviceFrames(
-                                        files1[i].toString(),
-                                        System.getProperty("user.dir")
-                                                + "/target/screenshot/" + device
-                                                + "/" + DeviceManager.getDeviceUDID()
-                                                .replaceAll("\\W", "_") + "/"
-                                                + deviceModel + "/failed_"
-                                                + failed_StepName.replaceAll(" ", "_") + ".jpeg",
-                                        System.getProperty("user.dir")
-                                                + "/target/screenshot/" + device
-                                                + "/" + DeviceManager.getDeviceUDID()
-                                                .replaceAll("\\W", "_") + "/"
-                                                + deviceModel + "/failed_"
-                                                + failed_StepName.replaceAll(" ", "_")
-                                                + "_framed.jpeg");
-                                break;
-                            } catch (InterruptedException e) {
-                                e.printStackTrace();
-                            } catch (IM4JavaException e) {
-                                e.printStackTrace();
-                            }
-                        }
-                    }
-                }
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-            System.out.println("Resource Directory was not found");
-        }
-    }
-
-    public void attachScreenShotToReport(String stepName) {
+    public void attachScreenShotToReport(File srcFile, String stepName) {
 
         try {
             String platform = null;
+
             if (DeviceManager.getMobilePlatform().equals(MobilePlatform.ANDROID)) {
                 platform = "android";
+
             } else if (DeviceManager.getMobilePlatform().equals(MobilePlatform.IOS)) {
                 platform = "iPhone";
             }
-            File framedImageAndroid = new File(
-                    System.getProperty("user.dir") + "/target/screenshot/" + platform + "/"
-                            + DeviceManager.getDeviceUDID() + "/" + deviceModel
-                            + "/failed_" + stepName.replaceAll(" ", "_") + "_framed.jpeg");
-            if (framedImageAndroid.exists()) {
-                reportManager.test.get().log(Status.INFO,
-                        "Snapshot below: " + ExtentTestManager.getTest().addScreenCaptureFromPath(
-                                System.getProperty("user.dir")
-                                        + "/target/screenshot/"
-                                        + platform + "/"
-                                        + DeviceManager.getDeviceUDID()
-                                        + "/" + deviceModel
-                                        + "/failed_" + stepName.replaceAll(" ", "_") + "_framed.jpeg"));
-            } else {
-                reportManager.test.get().log(Status.INFO,
-                        "Snapshot below: " + ExtentTestManager.getTest().addScreenCaptureFromPath(
-                                System.getProperty("user.dir") + "/target/screenshot/"
-                                        + platform + "/"
-                                        + DeviceManager.getDeviceUDID()
-                                        + "/" + deviceModel
-                                        + "/failed_" + stepName.replaceAll(" ", "_") + ".jpeg"));
-            }
+
+            String imagePath = System.getProperty("user.dir")
+                    + "/target/screenshot/"
+                    + platform + "/"
+                    + DeviceManager.getDeviceUDID().replaceAll("\\W", "_") + "/"
+                    + deviceModel.replaceAll(" ", "_")
+                    + "/failed_" + stepName.replaceAll(" ", "_") + ".jpeg";
+
+            FileUtils.copyFile(srcFile, new File(imagePath.trim()));
+
+            reportManager.test.get().log(Status.INFO, "Fail : " + ExtentTestManager.getTest().addScreenCaptureFromPath(imagePath));
+
         } catch (Exception e) {
 
         }
-
     }
 
 }

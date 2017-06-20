@@ -45,6 +45,7 @@ public class AppiumServerManager {
     public void startAppiumServer(String methodName) {
 
         if (System.getProperty("os.name").toLowerCase().contains("mac")) {
+
             if (DeviceManager.getMobilePlatform().equals(MobilePlatform.IOS)) {
                 startAppiumServerForIOS(methodName);
             } else {
@@ -75,7 +76,7 @@ public class AppiumServerManager {
 
         System.out.println(
                 "**************************************************************************\n");
-        System.out.println("Starting Appium Server to handle Android Device::" + DeviceManager.getDeviceUDID() + "\n");
+        System.out.println("Starting Appium Server to handle Android Device : " + DeviceManager.getDeviceUDID() + "\n");
         System.out.println(
                 "**************************************************************************\n");
 
@@ -87,10 +88,11 @@ public class AppiumServerManager {
 
         AppiumServiceBuilder builder =
                 new AppiumServiceBuilder().withAppiumJS(new File(prop.getProperty("APPIUM_JS_PATH")))
-                        .withArgument(GeneralServerFlag.LOG_LEVEL, "warn")
+                        .withArgument(GeneralServerFlag.LOG_LEVEL, "debug")
                         .withLogFile(new File(
-                                System.getProperty("user.dir") + "/target/appiumlogs/" + DeviceManager.getDeviceUDID()
-                                        .replaceAll("\\W", "_") + "__" + methodName + ".txt"))
+                                System.getProperty("user.dir") + "/target/appiumlogs/"
+                                        + DeviceManager.getDeviceUDID().replaceAll("\\W", "_") + "__"
+                                        + methodName.replace(" ", "_") + ".txt"))
                         .withArgument(AndroidServerFlag.CHROME_DRIVER_PORT, Integer.toString(chromePort))
                         .withArgument(AndroidServerFlag.BOOTSTRAP_PORT_NUMBER,
                                 Integer.toString(bootstrapPort))
@@ -123,7 +125,7 @@ public class AppiumServerManager {
 
         System.out
                 .println("**********************************************************************\n");
-        System.out.println("Starting Appium Server to handle IOS::" + DeviceManager.getDeviceUDID() + "\n");
+        System.out.println("Starting Appium Server to handle IOS : " + DeviceManager.getDeviceUDID() + "\n");
         System.out
                 .println("**********************************************************************\n");
 
@@ -132,12 +134,12 @@ public class AppiumServerManager {
         AppiumDriverLocalService appiumDriverLocalService;
         AppiumServiceBuilder builder =
                 new AppiumServiceBuilder().withAppiumJS(new File(prop.getProperty("APPIUM_JS_PATH")))
-                        .withArgument(GeneralServerFlag.LOG_LEVEL, "warn").withLogFile(new File(
-                        System.getProperty("user.dir") + "/target/appiumlogs/" + DeviceManager.getDeviceUDID()
-                                .replaceAll("\\W", "_") + "__" + methodName + ".txt"))
+                        .withArgument(GeneralServerFlag.LOG_LEVEL, "debug").withLogFile(new File(
+                        System.getProperty("user.dir") + "/target/appiumlogs/"
+                                + DeviceManager.getDeviceUDID().replaceAll("\\W", "_") + "__"
+                                + methodName.replaceAll(" ", "_") + ".txt"))
                         .withArgument(webKitProxy, webKitPort)
                         .withIPAddress("127.0.0.1")
-                        .withArgument(GeneralServerFlag.LOG_LEVEL, "debug")
                         .withArgument(GeneralServerFlag.TEMP_DIRECTORY,
                                 new File(String.valueOf(classPathRoot)).getAbsolutePath() + "/target/" + "tmp_"
                                         + port)
@@ -154,7 +156,7 @@ public class AppiumServerManager {
         return getServer().getUrl();
     }
 
-    public void destroyAppiumNode() {
+    private void destroyAppiumNode() {
 
         getServer().stop();
 
