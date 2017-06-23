@@ -13,7 +13,6 @@ import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
 public class IOSDeviceConfiguration {
@@ -29,7 +28,6 @@ public class IOSDeviceConfiguration {
 
     CommandPrompt commandPrompt = new CommandPrompt();
     AvailablePorts ap = new AvailablePorts();
-    Map<String, String> devices = new HashMap<>();
 
     String profile = "system_profiler SPUSBDataType | sed -n -E -e '/(iPhone|iPad|iPod)/"
             + ",/Serial/s/ *Serial Number: *(.+)/\\1/p'\n";
@@ -114,12 +112,13 @@ public class IOSDeviceConfiguration {
 
     public String getDeviceName() {
         String deviceName =
-                commandPrompt.runCommand("idevicename --udid "
+                commandPrompt.runCommandThruProcessBuilder("idevicename --udid "
                         + DeviceManager.getDeviceUDID());
         return deviceName;
     }
 
     public String getIOSDeviceProductVersion() {
+
         return commandPrompt
                 .runCommandThruProcessBuilder("ideviceinfo --udid "
                         + DeviceManager.getDeviceUDID()
@@ -143,7 +142,7 @@ public class IOSDeviceConfiguration {
 
     public String startIOSWebKit() {
 
-        int port = 0;
+        int port;
 
         try {
             setIOSWebKitProxyPorts();
@@ -165,15 +164,17 @@ public class IOSDeviceConfiguration {
             System.out.println(
                     "WebKit Proxy is started on device " + DeviceManager.getDeviceUDID() + " and with port number " + deviceMap
                             .get(DeviceManager.getDeviceUDID()) + " and in thread " + Thread.currentThread().getId());
-            //Add the Process ID to hashMap, which would be needed to kill IOSwebProxywhen required
+
+            //Add the Process ID to hashMap, which would be needed to kill IOSwebProxy when required
             appiumServerProcess.put(Thread.currentThread().getId(), getPid(p1));
             System.out.println("Process ID's:" + appiumServerProcess);
-
+            return String.valueOf(port);
         } catch (Exception e) {
 
             e.printStackTrace();
+            return null;
         }
-        return String.valueOf(port);
+
     }
 
     public long getPidOfProcess() {

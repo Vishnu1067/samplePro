@@ -16,11 +16,12 @@ public class CommandPrompt {
     private Process process;
     private BufferedReader bufferedReader;
 
-    String line;
-    String allLine = "";
-    int i = 1;
 
     public String runCommand(String command) {
+
+        String line;
+        String allLine = "";
+        int i = 1;
 
         try {
             process = Runtime.getRuntime().exec(command);
@@ -45,33 +46,32 @@ public class CommandPrompt {
 
     public String runCommandThruProcessBuilder(String command) {
 
+        String line;
+        String allLine = "";
         try {
 
-            bufferedReader = getBufferedReader(command);
+            BufferedReader bufferedReader = getBufferedReader(command);
 
-            String ff = bufferedReader.readLine();
             while ((line = bufferedReader.readLine()) != null) {
 
                 allLine = allLine + "" + line + "\n";
-                System.out.println(allLine);
             }
-
+            return allLine.split(":")[1].replace("\n", "").trim();
         } catch (Exception e) {
-
-            e.printStackTrace();
+            return allLine.replace("\n", "").trim();
         }
-
-        return allLine.split(":")[1].replace("\n", "").trim();
     }
 
     public String runProcessCommandToGetDeviceID(String command) {
+
+        String line;
+        String allLine = "";
 
         try {
 
             bufferedReader = getBufferedReader(command);
             while ((line = bufferedReader.readLine()) != null) {
                 allLine = allLine.trim() + "" + line.trim() + "\n";
-                System.out.println(allLine);
             }
 
         } catch (Exception e) {
@@ -83,6 +83,9 @@ public class CommandPrompt {
     }
 
     public void runCommandThruProcess(String command) {
+
+        String line;
+        String allLine = "";
 
         try {
 
