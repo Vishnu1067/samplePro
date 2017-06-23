@@ -52,10 +52,23 @@ public class DeviceManager {
         return null;
     }
 
+    public String getPlatformVersion() {
+
+        if (getMobilePlatform().equals(MobilePlatform.ANDROID) && prop.getProperty("Platform").equalsIgnoreCase("android")) {
+            return androidDevice.getDeviceManufacturer();
+        } else if (getMobilePlatform().equals(MobilePlatform.IOS) && prop.getProperty("Platform").equalsIgnoreCase("ios")) {
+            return iosDevice.getIOSDeviceProductVersion();
+        }
+        return null;
+
+    }
+
     public String getDeviceName() {
 
         if (getMobilePlatform().equals(MobilePlatform.ANDROID) && prop.getProperty("Platform").equalsIgnoreCase("android")) {
             return androidDevice.getDeviceName();
+        } else if (getMobilePlatform().equals(MobilePlatform.IOS) && prop.getProperty("Platform").equalsIgnoreCase("ios")) {
+            return iosDevice.getDeviceName();
         }
         return null;
     }
